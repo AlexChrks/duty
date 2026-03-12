@@ -18,18 +18,20 @@ export async function createLead(data: LeadInsert) {
 
   const lead = row as unknown as Lead;
 
-  // Notify via Telegram if business has a chat configured
-  const { data: biz } = await supabase
-    .from("businesses")
-    .select("telegram_chat_id")
-    .eq("id", data.business_id)
+  // Notify via Telegram if business has an active integration
+  const { data: integration } = await supabase
+    .from("integrations")
+    .select("config")
+    .eq("business_id", data.business_id)
+    .eq("type", "telegram")
+    .eq("is_active", true)
     .single();
 
-  const business = biz as unknown as { telegram_chat_id: string | null } | null;
+  const chatId = (integration?.config as { chat_id?: string } | null)?.chat_id;
 
-  if (business?.telegram_chat_id) {
+  if (chatId) {
     await sendTelegramMessage({
-      chatId: business.telegram_chat_id,
+      chatId,
       text: formatLeadMessage(lead),
     });
   }
