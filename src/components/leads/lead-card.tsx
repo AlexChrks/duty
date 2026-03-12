@@ -17,7 +17,7 @@ export function LeadCard({ lead }: { lead: Lead }) {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-base font-medium">
-          {lead.customer_name ?? "Unknown Caller"}
+          {lead.customer_name ?? "Неизвестный"}
         </CardTitle>
         <Badge variant="secondary" className={statusColors[lead.status]}>
           {lead.status}

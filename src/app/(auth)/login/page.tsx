@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,12 +47,12 @@ export default function LoginPage() {
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Duty</CardTitle>
-        <CardDescription>Sign in to your account</CardDescription>
+        <CardDescription>Войдите в свой аккаунт</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleLogin} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">Эл. почта</Label>
             <Input
               id="email"
               type="email"
@@ -62,7 +63,7 @@ export default function LoginPage() {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Пароль</Label>
             <Input
               id="password"
               type="password"
@@ -71,13 +72,20 @@ export default function LoginPage() {
               required
             />
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Вход..." : "Войти"}
           </Button>
         </form>
+        <p className="mt-4 text-center text-sm text-muted-foreground">
+          Нет аккаунта?{" "}
+          <Link
+            href="/signup"
+            className="text-primary underline-offset-4 hover:underline"
+          >
+            Зарегистрироваться
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );

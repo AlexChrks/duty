@@ -4,9 +4,9 @@ export default function LeadsPage() {
   return (
     <div className="grid gap-4">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Leads</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Заявки</h2>
         <p className="text-muted-foreground">
-          Incoming leads from your AI phone agent.
+          Входящие заявки от вашего AI-агента.
         </p>
       </div>
       <LeadList />

@@ -11,19 +11,19 @@ export function LeadList() {
   if (!business) {
     return (
       <p className="text-muted-foreground">
-        No business configured. Go to Settings to set up your business.
+        Бизнес не настроен. Перейдите в Настройки, чтобы настроить компанию.
       </p>
     );
   }
 
   if (isLoading) {
-    return <p className="text-muted-foreground">Loading leads...</p>;
+    return <p className="text-muted-foreground">Загрузка заявок...</p>;
   }
 
   if (leads.length === 0) {
     return (
       <p className="text-muted-foreground">
-        No leads yet. They will appear here when your AI agent receives calls.
+        Заявок пока нет. Они появятся здесь, когда AI-агент примет звонки.
       </p>
     );
   }

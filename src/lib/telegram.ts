@@ -37,16 +37,16 @@ export async function sendTelegramMessage({
 }
 
 export function formatLeadMessage(lead: {
-  caller_name: string | null;
-  caller_phone: string;
+  customer_name: string | null;
+  customer_phone: string | null;
   summary: string | null;
 }): string {
-  const name = lead.caller_name ?? "Unknown";
+  const name = lead.customer_name ?? "Неизвестно";
   return [
-    `<b>New Lead</b>`,
-    `Name: ${name}`,
-    `Phone: ${lead.caller_phone}`,
-    lead.summary ? `Summary: ${lead.summary}` : null,
+    `<b>Новый лид</b>`,
+    `Имя: ${name}`,
+    lead.customer_phone ? `Телефон: ${lead.customer_phone}` : null,
+    lead.summary ? `Описание: ${lead.summary}` : null,
   ]
     .filter(Boolean)
     .join("\n");

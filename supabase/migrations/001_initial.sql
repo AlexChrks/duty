@@ -233,100 +233,14 @@ create trigger integrations_updated_at
   for each row execute function set_updated_at();
 
 -- ============================================================
--- Row Level Security
+-- Row Level Security — enable on all tenant-scoped tables.
+-- Policies are defined in 002_rls_policies.sql.
 -- ============================================================
 
--- Every tenant-scoped table: users can SELECT/UPDATE their own
--- business's data. INSERT and DELETE from the dashboard go
--- through server actions (service role) for MVP, but we
--- include insert policies where dashboard-direct inserts make
--- sense.  The voice server uses the service_role key and
--- bypasses RLS entirely.
-
--- businesses ------------------------------------------------
-
-alter table businesses enable row level security;
-
-create policy "select own business"
-  on businesses for select
-  using (id = public.get_business_id());
-
-create policy "update own business"
-  on businesses for update
-  using (id = public.get_business_id());
-
--- profiles ---------------------------------------------------
-
-alter table profiles enable row level security;
-
-create policy "select own profile"
-  on profiles for select
-  using (id = auth.uid());
-
-create policy "update own profile"
-  on profiles for update
-  using (id = auth.uid());
-
--- agent_configs ----------------------------------------------
-
+alter table businesses    enable row level security;
+alter table profiles      enable row level security;
 alter table agent_configs enable row level security;
-
-create policy "select own agent configs"
-  on agent_configs for select
-  using (business_id = public.get_business_id());
-
-create policy "insert own agent configs"
-  on agent_configs for insert
-  with check (business_id = public.get_business_id());
-
-create policy "update own agent configs"
-  on agent_configs for update
-  using (business_id = public.get_business_id());
-
--- calls ------------------------------------------------------
-
-alter table calls enable row level security;
-
-create policy "select own calls"
-  on calls for select
-  using (business_id = public.get_business_id());
-
--- call_events ------------------------------------------------
-
-alter table call_events enable row level security;
-
-create policy "select own call events"
-  on call_events for select
-  using (business_id = public.get_business_id());
-
--- leads ------------------------------------------------------
-
-alter table leads enable row level security;
-
-create policy "select own leads"
-  on leads for select
-  using (business_id = public.get_business_id());
-
-create policy "update own leads"
-  on leads for update
-  using (business_id = public.get_business_id());
-
--- integrations -----------------------------------------------
-
-alter table integrations enable row level security;
-
-create policy "select own integrations"
-  on integrations for select
-  using (business_id = public.get_business_id());
-
-create policy "insert own integrations"
-  on integrations for insert
-  with check (business_id = public.get_business_id());
-
-create policy "update own integrations"
-  on integrations for update
-  using (business_id = public.get_business_id());
-
-create policy "delete own integrations"
-  on integrations for delete
-  using (business_id = public.get_business_id());
+alter table calls         enable row level security;
+alter table call_events   enable row level security;
+alter table leads         enable row level security;
+alter table integrations  enable row level security;
