@@ -20,4 +20,6 @@ export type {
   Integration,
   IntegrationInsert,
   IntegrationUpdate,
+  NotificationLog,
+  NotificationLogInsert,
 } from "./lead";

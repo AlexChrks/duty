@@ -1,6 +1,9 @@
-import { LeadList } from "@/components/leads/lead-list";
+import { getLeads } from "@/lib/leads/queries";
+import { LeadsTable } from "@/components/leads/leads-table";
 
-export default function LeadsPage() {
+export default async function LeadsPage() {
+  const { leads } = await getLeads();
+
   return (
     <div className="grid gap-4">
       <div>
@@ -9,7 +12,7 @@ export default function LeadsPage() {
           Входящие заявки от вашего AI-агента.
         </p>
       </div>
-      <LeadList />
+      <LeadsTable leads={leads} />
     </div>
   );
 }

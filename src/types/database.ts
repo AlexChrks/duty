@@ -270,6 +270,42 @@ export interface Database {
         };
         Relationships: [];
       };
+      notification_log: {
+        Row: {
+          id: string;
+          business_id: string;
+          lead_id: string | null;
+          provider: string;
+          status: string;
+          destination: string | null;
+          error: string | null;
+          payload: Json;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          business_id: string;
+          lead_id?: string | null;
+          provider: string;
+          status: string;
+          destination?: string | null;
+          error?: string | null;
+          payload?: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          business_id?: string;
+          lead_id?: string | null;
+          provider?: string;
+          status?: string;
+          destination?: string | null;
+          error?: string | null;
+          payload?: Json;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {

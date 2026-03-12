@@ -14,7 +14,11 @@ import { SidebarNav, navItems } from "@/components/layout/sidebar";
 
 function usePageTitle(): string {
   const pathname = usePathname();
-  return navItems.find((item) => item.href === pathname)?.label ?? "Duty";
+  return (
+    navItems.find((item) => item.href === pathname)?.label ??
+    navItems.find((item) => pathname.startsWith(item.href + "/"))?.label ??
+    "Duty"
+  );
 }
 
 export function Header() {

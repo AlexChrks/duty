@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { sendTelegramMessage, formatLeadMessage } from "@/lib/telegram";
+import { sendLeadNotifications } from "@/lib/notifications";
 import type { Lead, LeadInsert, LeadUpdate } from "@/types";
 
 export async function createLead(data: LeadInsert) {
@@ -18,23 +18,10 @@ export async function createLead(data: LeadInsert) {
 
   const lead = row as unknown as Lead;
 
-  // Notify via Telegram if business has an active integration
-  const { data: integration } = await supabase
-    .from("integrations")
-    .select("config")
-    .eq("business_id", data.business_id)
-    .eq("type", "telegram")
-    .eq("is_active", true)
-    .single();
-
-  const chatId = (integration?.config as { chat_id?: string } | null)?.chat_id;
-
-  if (chatId) {
-    await sendTelegramMessage({
-      chatId,
-      text: formatLeadMessage(lead),
-    });
-  }
+  // Best-effort notification — never blocks or crashes lead creation
+  sendLeadNotifications(lead).catch((err) =>
+    console.error("Unexpected notification error:", err),
+  );
 
   revalidatePath("/leads");
   return lead;

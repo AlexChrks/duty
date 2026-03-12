@@ -26,3 +26,6 @@ export type LeadUpdate = Database["public"]["Tables"]["leads"]["Update"];
 export type Integration = Database["public"]["Tables"]["integrations"]["Row"];
 export type IntegrationInsert = Database["public"]["Tables"]["integrations"]["Insert"];
 export type IntegrationUpdate = Database["public"]["Tables"]["integrations"]["Update"];
+
+export type NotificationLog = Database["public"]["Tables"]["notification_log"]["Row"];
+export type NotificationLogInsert = Database["public"]["Tables"]["notification_log"]["Insert"];
